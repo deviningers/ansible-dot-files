@@ -16,8 +16,10 @@ or I can go based off of a presetup arch distro (just write down the steps) ez
 
 ## Notes:
 After installing Ansible pull on a machine, just run this command:
-`ansible-pull -U https://gitserver.com/this_repo.git`
+`ansible-pull -U https://github.com/deviningers/ansible-dot-files.git`
 This will look for and run the local.yaml file.
+
+Possibly go back through and add tags that make sense to everything
 
 
 ##### Links:
