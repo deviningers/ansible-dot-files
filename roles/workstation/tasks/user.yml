@@ -1,0 +1,105 @@
+- name: devin | create group
+  group:
+    name: devin | devin
+    state: present
+
+- name: devin | create user
+  user:
+    name: devin | devin
+    group: devin
+    groups: wheel
+    state: present
+    comment: "Devin I"
+    password: "Change this password before running"
+    shell: /bin/zsh
+
+- name: devin | add sudoers file
+  copy:
+    src: sudoers_devin
+    dest: /etc/sudoers.d/devin
+    owner: root
+    group: root
+    mode: 0440
+
+- name: devin | create config directories
+  file:
+    path: /home/devin/{{ item.dir }}
+    state: directory
+    owner: devin
+    group: devin
+    mode: 0700
+  with_items:
+    - { dir: '.config' }
+    - { dir: '.zsh' }
+
+# - name: devin | copy dotfiles
+#   copy:
+#     src: users/devin/{{ item.src }}
+#     dest: /home/devin/{{ item.dest }}
+#     owner: devin
+#     group: devin
+#     mode: 0600
+#   with_items:
+#     - { src: 'bash/bash_aliases', dest: '.bash/bash_aliases' }
+#     - { src: 'bash/bash_profile', dest: '.bash_profile' }
+#     - { src: 'bash/bash_prompt', dest: '.bash/bash_prompt' }
+#     - { src: 'bash/bash_functions', dest: '.bash/bash_functions' }
+#     - { src: 'bash/bashrc', dest: '.bashrc' }
+#     - { src: 'bash/profile', dest: '.profile' }
+#     - { src: 'git/gitconfig', dest: '.gitconfig' }
+#     - { src: 'htop/htoprc', dest: '.config/htop/htoprc' }
+#     - { src: 'inputrc', dest: '.inputrc' }
+#     - { src: 'mc/mc.ini', dest: '.config/mc/ini' }
+#     - { src: 'vim/vimrc', dest: '.vimrc' }
+#     - { src: 'zsh/zshrc', dest: '.zshrc' }
+
+# - name: devin | copy individual zsh config files
+#   copy:
+#     src: users/devin/zsh/{{ item.src }}
+#     dest: /home/devin/.zsh/{{ item.src }}
+#     owner: devin
+#     group: devin
+#     mode: 0600
+#   with_items:
+#     - { src: 'aliases.zsh' }
+#     - { src: 'bindkey.zsh' }
+#     - { src: 'completion.zsh' }
+#     - { src: 'exports.zsh' }
+#     - { src: 'functions.zsh' }
+#     - { src: 'history.zsh' }
+#     - { src: 'path.zsh' }
+#     - { src: 'plugins.zsh' }
+#     - { src: 'prompt.zsh' }
+#     - { src: 'setopt.zsh' }
+#     - { src: 'theming.zsh' }
+
+# - name: devin | users | devin | copy vim color files
+#   copy:
+#     src: users/devin/vim/{{ item.src }}
+#     dest: /home/devin/.vim/colors/{{ item.src }}
+#     owner: devin
+#     group: devin
+#     mode: 0600
+#   with_items:
+#     - { src: 'bubblegum-256-dark.vim' }
+#     - { src: 'darktango.vim' }
+#     - { src: 'jellybeans.vim' }
+#     - { src: 'xoria256.vim' }
+#     - { src: 'zenburn.vim' }
+
+# - name: devin | checkout git repositories
+#   become: yes
+#   git:
+#     repo: "{{ item.repo }}"
+#     dest: "{{ item.dest }}"
+#     force: yes
+#   with_items:
+#     - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/devin/.vim/bundle/ctrlp.vim' }
+#     - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/devin/.vim/bundle/jedi-vim' }
+#     - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/devin/.vim/bundle/ansible-vim' }
+#     - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/devin/.vim/bundle/vim-grammarous' }
+#     - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/devin/.vim/bundle/thesaurus_query' }
+#     - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/devin/.vim/bundle/nerdtree' }
+#     - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/devin/.vim/bundle/vim-obsession' }
+#     - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/devin/.vim/bundle/syntastic' }
+#   notify: update_vim_bundle_perms

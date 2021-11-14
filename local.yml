@@ -1,5 +1,5 @@
 ---
-# tasks to complete before running roles 
+# tasks to complete before running roles
 - hosts: localhost      # maybe all?
   connection: local
   tags: always
@@ -17,16 +17,15 @@
       changed_when: False
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
-  tasks:
-    - name: install shell programs
-      package: 
-        name: htop
-
-# run roles
 - hosts: all
-  tags: base
   become: true
   roles:
-    - base
-    - other_roles
+    - workstation
 
+## run roles
+#- hosts: all
+#  tags: base
+#  become: true
+#  roles:
+#    - base
+#    - other_roles

@@ -1,26 +1,23 @@
 # ansible-dot-files
 ## plan
 I either need to get a setup file made (which shouldn't be too hard right?)
-or I can go based off of a presetup arch distro (just write down the steps) ez OR copy someones sorta
+or I can go based off of a presetup arch distro (just write down the steps) ez
 
-okay, maybe pull script to setup arch linux beforehand, playbook can't install
+## Todo:
+- setup system and document steps
+- copy documented steps into local.yml file
 
-## Steps
-- update system
-- run setup playbook
+## Setup Steps:
+1. Install distro (Arch: [install guide](https://wiki.archlinux.org/title/Installation_guide), or Ubuntu/Debian)
+2. install ansible (ansible-pull) + git
+- `sudo pacman install `
+- `sudo apt-get install ansible git`
+3. run ansible-pull command to run through playbook
 
-1. Run through [install guide](https://wiki.archlinux.org/title/Installation_guide) real quick and only pacstrap the basics 
-2. install ansible + git
-3. clone repo
-4. update system
-5. run my playbook, ez
-
-
-## Notes: 
-After installing Ansible on an arch based machine, just run this command:
-```ansible-pull -U https://gitserver.com/this_repo.git```
-This will look for and run the local.yum file.
-
+## Notes:
+After installing Ansible pull on a machine, just run this command:
+`ansible-pull -U https://gitserver.com/this_repo.git`
+This will look for and run the local.yaml file.
 
 
 ##### Links:

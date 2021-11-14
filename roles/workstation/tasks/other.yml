@@ -1,0 +1,68 @@
+- name: install shell programs
+  package:
+    name:
+      - htop
+      - zsh
+      - zsh-syntax-highlighting
+      - vim
+      - bat #add alias to .zsh
+      - ranger
+      - cmus
+      - cmatrix
+      - w3m
+      - neofetch
+      - powertop
+      - youtube-dl
+      - python-pywal
+
+- name: install security software
+  package:
+    name:
+      - shellharden
+      - nmap
+      - ufw
+
+- name: install GUI software
+  package:
+    name:
+      - firefox
+      - atom
+      - flameshot   # could switch this out
+      - rofi
+      - i3-gaps     #
+#      - containerd  (look into configuring this first)
+
+# - name: another task (move files)...etc
+#   copy:
+#     src: files/wallpapers
+#     dest: /usr/share/backgrounds/ansible-wallpaper.png
+#     owner: root
+#     group: root
+#
+# - name: copy .zshrc file
+#   copy:
+#     src: files/zshrc
+#     dest: /home/devin/.zshrc
+#     owner: devin
+#     group: devin
+
+# Ansible user for auto-updating from repo
+# - name: add ansible user
+#   user:
+#     name: system
+#     system: yes
+#
+# - name: set up sudo for ansible user
+#   copy:
+#     src: files/sudoers_system    # file needs to have "system ALL=(ALL) NOPASSWD: ALL"
+#     dest: /etc/sudoers.d/system
+#     owner: root
+#     group: root
+#     mode: 0440
+#
+# - name: add ansible-pull cron job
+#   cron:
+#     name: ansible auto-provision
+#     user: system
+#     minute: "*/10"
+#     job: ansible-pull -o -U https://github.com/deviningers/ansible-dot-files.git
