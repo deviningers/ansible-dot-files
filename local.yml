@@ -1,6 +1,6 @@
 ---
 # tasks to complete before running roles
-- hosts: all
+- hosts: localhost
   connection: local
   become: true
   pre_tasks:
@@ -9,7 +9,7 @@
       changed_when: False
       when: ansible_distribution == "Archlinux"
 
-    - name: pre-run | update package cache (debian, etc
+    - name: pre-run | update package cache (debian, etcs
       apt: update_cache=yes
       changed_when: False
       when: ansible_distribution in ["Debian", "Ubuntu"]
