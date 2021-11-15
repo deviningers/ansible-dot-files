@@ -1,6 +1,7 @@
 ---
 # tasks to complete before running roles
 - hosts: localhost
+  gather_facts: yes
   connection: local
   become: true
   pre_tasks:

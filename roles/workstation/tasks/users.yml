@@ -1,18 +1,29 @@
+var_prompt:
+  - name: password1
+    private: yes
+    encrypt: sha512_crypt
+    confirm: yes
+    salt_size: 7
+    prompt: What is the default user's password?
+    #unsafe: yes    # this allows special characters like { and %
+
 - name: create group
   group:
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
   with_items:
     - caroline
     - devin
+    - sudo
 
 - name: create user
   user:
-    name: {{ item }}
-    group: {{ item }}
-    groups: wheel
+    name: "{{ item }}"
+    group: "{{ item }}"
+    groups: sudo
     state: present
     shell: /bin/zsh
+    password: "{{ password1 }}"
   with_items:
     - caroline
     - devin
