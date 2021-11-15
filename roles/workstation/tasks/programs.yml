@@ -13,7 +13,6 @@
       - neofetch
       - powertop
       - youtube-dl
-      - python-pywal
 
 - name: install security software
   package:
@@ -31,6 +30,12 @@
       - rofi
       - i3-gaps     #
 #      - containerd  (look into configuring this first)
+
+- name: arch specific software
+  package:
+    name:
+      - python-pywal
+    when: ansible_distribution == "Archlinux"
 
 # - name: another task (move files)...etc
 #   copy:
