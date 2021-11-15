@@ -9,6 +9,7 @@ or I can go based off of a presetup arch distro (just write down the steps) ez
 
 ## Setup Steps:
 1. Install distro (Arch: [install guide](https://wiki.archlinux.org/title/Installation_guide), or Ubuntu/Debian)
+- NOTE: Need to add `localhost ansible_connection=local` to /etc/ansible/hosts if hostname is set
 2. install ansible (ansible-pull) + git
 - `sudo pacman install `
 - `sudo apt-get install ansible git`
@@ -24,3 +25,4 @@ Possibly go back through and add tags that make sense to everything
 
 ##### Links:
 - [Most helpful Video - By LearnLinuxTV](https://youtu.be/gIDywsGBqf4)
+- [Hostname Solution](https://stackoverflow.com/questions/30782736/ansible-pull-with-no-inventory-limitations)

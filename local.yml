@@ -22,7 +22,7 @@
       encrypt: sha512_crypt
       confirm: yes
       salt_size: 7
-      prompt: "\n\nWhat is the default user's password?"
+      prompt: "\nWhat is the default user's password?"
       #unsafe: yes    # this allows special characters like { and %
   become: true
   roles:
