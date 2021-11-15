@@ -1,4 +1,4 @@
 - block:
- #  - import_tasks: users.yml
+  - import_tasks: users.yml
   - import_tasks: programs.yml
 # - import_tasks: other tasks.yml
