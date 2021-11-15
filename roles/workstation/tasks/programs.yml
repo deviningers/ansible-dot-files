@@ -38,7 +38,7 @@
       - atom
       - firefox
       - i3-gaps
-    when: ansible_distribution == "Archlinux"
+  when: ansible_distribution == "Archlinux"
 
 # need to figure out how to install these specifics
 # - name: ubuntu specific software
