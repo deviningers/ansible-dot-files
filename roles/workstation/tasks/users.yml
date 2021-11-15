@@ -1,12 +1,3 @@
-var_prompt:
-  - name: password1
-    private: yes
-    encrypt: sha512_crypt
-    confirm: yes
-    salt_size: 7
-    prompt: What is the default user's password?
-    #unsafe: yes    # this allows special characters like { and %
-
 - name: create group
   group:
     name: "{{ item }}"

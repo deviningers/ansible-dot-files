@@ -16,14 +16,14 @@
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
 - hosts: localhost
+  vars_prompt:
+    - name: password1
+      private: yes
+      encrypt: sha512_crypt
+      confirm: yes
+      salt_size: 7
+      prompt: "\n\nWhat is the default user's password?"
+      #unsafe: yes    # this allows special characters like { and %
   become: true
   roles:
     - workstation
-
-## run roles
-#- hosts: all
-#  tags: base
-#  become: true
-#  roles:
-#    - base
-#    - other_roles
