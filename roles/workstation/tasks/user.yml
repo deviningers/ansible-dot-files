@@ -1,27 +1,31 @@
-- name: devin | create group
+- name: create group
   group:
-    name: devin | devin
+    name: {{ item }}
     state: present
+  with_items:
+    - caroline
+    - devin
 
-- name: devin | create user
+- name: create user
   user:
-    name: devin | devin
-    group: devin
+    name: {{ item }}
+    group: {{ item }}
     groups: wheel
     state: present
-    comment: "Devin I"
-    password: "Change this password before running"
     shell: /bin/zsh
+  with_items:
+    - caroline
+    - devin
 
-- name: devin | add sudoers file
+- name: add sudoers file
   copy:
-    src: sudoers_devin
-    dest: /etc/sudoers.d/devin
+    src: sudoers_group
+    dest: /etc/sudoers.d/sudoers_group
     owner: root
     group: root
     mode: 0440
 
-- name: devin | create config directories
+- name: create config directories
   file:
     path: /home/devin/{{ item.dir }}
     state: directory
@@ -32,7 +36,7 @@
     - { dir: '.config' }
     - { dir: '.zsh' }
 
-# - name: devin | copy dotfiles
+# - name: copy dotfiles
 #   copy:
 #     src: users/devin/{{ item.src }}
 #     dest: /home/devin/{{ item.dest }}
@@ -53,7 +57,7 @@
 #     - { src: 'vim/vimrc', dest: '.vimrc' }
 #     - { src: 'zsh/zshrc', dest: '.zshrc' }
 
-# - name: devin | copy individual zsh config files
+# - name: copy individual zsh config files
 #   copy:
 #     src: users/devin/zsh/{{ item.src }}
 #     dest: /home/devin/.zsh/{{ item.src }}
@@ -73,7 +77,7 @@
 #     - { src: 'setopt.zsh' }
 #     - { src: 'theming.zsh' }
 
-# - name: devin | users | devin | copy vim color files
+# - name: copy vim color files
 #   copy:
 #     src: users/devin/vim/{{ item.src }}
 #     dest: /home/devin/.vim/colors/{{ item.src }}
@@ -87,7 +91,7 @@
 #     - { src: 'xoria256.vim' }
 #     - { src: 'zenburn.vim' }
 
-# - name: devin | checkout git repositories
+# - name: checkout git repositories
 #   become: yes
 #   git:
 #     repo: "{{ item.repo }}"
