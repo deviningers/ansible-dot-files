@@ -4,8 +4,15 @@
 
 - block:
   - import_tasks: secure.yml
+  - import_tasks: users.yml  # requires sudo (secure.yml) and ()
   - import_tasks: programs.yml
-  - import_tasks: users.yml
-  - import_tasks: AUR_programs.yml
-    # - GUI.yml
     # - other.yml
+
+- block:
+  - import_tasks: AUR_programs.yml # requires devin (users.yml)
+  - import_tasks: GUI-Arch.yml
+  when: ansible_distribution == "Archlinux"
+
+# - block:
+#   - import_tasks: GUI-Debian.yml
+#   when: ansible_distribution in ["Debian", "Ubuntu"]

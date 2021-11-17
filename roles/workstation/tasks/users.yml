@@ -13,6 +13,7 @@
     shell: /bin/zsh
     #password: "{{ password1 }}" # set the password at the end so that sudo doesn't prompt when using become
   loop: "{{ users }}"
+
 - name: create config directories
   file:
     path: "{{ homedir }}{{ item.dir }}"
