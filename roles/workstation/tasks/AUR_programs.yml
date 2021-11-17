@@ -1,0 +1,16 @@
+# taken from https://github.com/geosword/ansible.archyay
+- name: Clone yay
+  become_user: "{{ users[0] }}"
+  git:
+    repo: https://aur.archlinux.org/yay-bin.git
+    dest: "{{ homedir }}/repo/yay"
+    update: true
+  when: ansible_distribution == "Archlinux"
+
+- name: Build and install yay
+  become_user: "{{ users[0] }}"
+  command:
+    chdir: "{{ homedir }}/repo/yay"
+    cmd: "makepkg -sfi --noconfirm"
+    creates: /usr/bin/yay
+  when: ansible_distribution == "Archlinux"

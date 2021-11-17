@@ -1,0 +1,6 @@
+---
+# vars file for workstations
+users:
+  - devin
+  - caroline
+homedir: "/home/{{ users[0] }}/"

@@ -13,6 +13,7 @@
       - neofetch
       - powertop
       - youtube-dl
+      - sudo
 
 - name: install security software
   package:

@@ -1,4 +1,17 @@
-- name: Lock root account
-  user:
-    name: root
-    password_lock: yes
+# - name: Lock root account # ensure this doesn't break anything
+#   user:
+#     name: root
+#     password_lock: yes
+
+- name: create sudo group
+  group:
+    name: sudo
+    state: present
+
+- name: add sudoers file
+  copy:
+    src: sudoers_group
+    dest: /etc/sudoers.d/sudoers_group
+    owner: root
+    group: root
+    mode: 0440
