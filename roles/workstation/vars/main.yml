@@ -1,6 +1,6 @@
 ---
 # vars file for workstations
-users:
+users: # first user is the main account, all others are secondary
   - devin
   - caroline
 homedir: "/home/{{ users[0] }}/"
