@@ -26,26 +26,18 @@
     - { dir: '.zsh' }
     - { dir: 'repo' }
 
-# - name: copy dotfiles
-#   copy:
-#     src: users/{{ users[0] }}/{{ item.src }}
-#     dest: {{ homedir }}/{{ item.dest }}
-#     owner: {{ users[0] }}
-#     group: {{ users[0] }}
-#     mode: 0600
-#   with_items:
-#     - { src: 'bash/bash_aliases', dest: '.bash/bash_aliases' }
-#     - { src: 'bash/bash_profile', dest: '.bash_profile' }
-#     - { src: 'bash/bash_prompt', dest: '.bash/bash_prompt' }
-#     - { src: 'bash/bash_functions', dest: '.bash/bash_functions' }
-#     - { src: 'bash/bashrc', dest: '.bashrc' }
-#     - { src: 'bash/profile', dest: '.profile' }
-#     - { src: 'git/gitconfig', dest: '.gitconfig' }
-#     - { src: 'htop/htoprc', dest: '.config/htop/htoprc' }
-#     - { src: 'inputrc', dest: '.inputrc' }
-#     - { src: 'mc/mc.ini', dest: '.config/mc/ini' }
-#     - { src: 'vim/vimrc', dest: '.vimrc' }
-#     - { src: 'zsh/zshrc', dest: '.zshrc' }
+- name: copy dotfiles
+  copy:
+    src: {{ item.src }}
+    dest: {{ homedir }}/{{ item.dest }}
+    owner: {{ users[0] }}
+    group: {{ users[0] }}
+    mode: 0600
+  with_items:
+    - { src: 'i3_config', dest: '.config/i3/config'}
+    - { src: 'zshrc', dest: '.zshrc' }
+    # - { src: 'bash/profile', dest: '.profile' }
+    # - { src: 'vim/vimrc', dest: '.vimrc' }
 
 # - name: copy individual zsh config files
 #   copy:
