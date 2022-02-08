@@ -1,11 +1,13 @@
-- name: install shell programs
+- name: install arch specific software
   package:
     name:
+      # Shell
+      - python-pywal
       - htop
       - zsh
       - zsh-syntax-highlighting
       - vim
-      - bat #add alias to .zsh
+      - bat
       - ranger
       - cmus
       - cmatrix
@@ -14,36 +16,55 @@
       - powertop
       - youtube-dl
       - sudo
-
-- name: install security software
-  package:
-    name:
+      # Security
       - nmap
       - ufw
-
-- name: install GUI software
-  package:
-    name:
+      - shellharden
+      # Graphical
+      - atom
       - flameshot   # look into better solutions
       - rofi
-#      - containerd  (look into configuring this first)
+      - gnome-terminal # look into better solutions
+      - firefox
+      # - containerd  (look into configuring this first)
+  when: ansible_distribution == "Archlinux"
 
-- name: install arch specific software
+- name: ubuntu specific software
   package:
     name:
       # Shell
-      - python-pywal
+      - htop
+      - zsh
+      - zsh-syntax-highlighting
+      - vim
+      - bat
+      - ranger
+      - cmus
+      - cmatrix
+      - w3m
+      - neofetch
+      - powertop
+      - youtube-dl
+      - sudo
       # Security
-      - shellharden
-      # GUI
-      - atom
+      - nmap
+      - ufw
+      # - shellharden
+      # Graphical
+      - flameshot   # look into better solutions
+      - rofi
+      - gnome-terminal # look into better solutions
       - firefox
-  when: ansible_distribution == "Archlinux"
+      # - containerd  (look into configuring this first)
+      # - atom
+      # - python-pywal
+  when: ansible_distribution in ["Debian", "Ubuntu"]
 
-# need to figure out how to install these specifics
-# - name: ubuntu specific software
-#   package:
-#     name:
-#       - atom
-#       - shellharden
-#       - python-pywal
+
+- name: install yay on arch
+  become_user: "{{ users[0] }}"
+  command: "{{ item }}"
+  with_items:
+    - "git clone https://aur.archlinux.org/yay-git.git"
+    - "sudo systemctl enable ly.service"
+  when: ansible_distribution == "Archlinux"
