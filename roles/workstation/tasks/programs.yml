@@ -16,6 +16,12 @@
       - powertop
       - youtube-dl
       - sudo
+      - dmenu
+      - fail2ban
+      - powerline
+      - powerline-fonts
+      - powerline-vim
+      - zsh-syntax-highlighting
       # Security
       - nmap
       - ufw
@@ -26,10 +32,12 @@
       - rofi
       - gnome-terminal # look into better solutions
       - firefox
+      - signal-desktop
+      - ttf-hack
       # - containerd  (look into configuring this first)
   when: ansible_distribution == "Archlinux"
 
-- name: ubuntu specific software
+- name: debian specific software
   package:
     name:
       # Shell
@@ -46,6 +54,9 @@
       - powertop
       - youtube-dl
       - sudo
+      - dmenu
+      - fail2ban
+      - zsh-syntax-highlighting
       # Security
       - nmap
       - ufw
@@ -55,16 +66,34 @@
       - rofi
       - gnome-terminal # look into better solutions
       - firefox
+      - fonts-hack-ttf
       # - containerd  (look into configuring this first)
       # - atom
       # - python-pywal
+      # - signal-desktop (https://itsfoss.com/install-signal-ubuntu/)
   when: ansible_distribution in ["Debian", "Ubuntu"]
-
 
 - name: install yay on arch
   become_user: "{{ users[0] }}"
   command: "{{ item }}"
   with_items:
-    - "git clone https://aur.archlinux.org/yay-git.git"
-    - "sudo systemctl enable ly.service"
+    - "cd ~/repo"
+    - "git clone https://aur.archlinux.org/yay.git"
+    - "cd yay"
+    - "makepkg -si"
   when: ansible_distribution == "Archlinux"
+  ignore_errors: true
+
+# add packages w/ "yay -S pkg --noconfirm"
+# remove packages w/ "yay -Rns pkg --noconfirm"
+# clean unwanted dependencies w/ "ysy -Yc --noconfirm"
+
+- name: install oh-my-zsh and related customizations
+  become_user: "{{ users[0] }}"
+  shell: 
+    cmd: "{{ item }}"
+  with_items:
+    - "curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    - "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k"
+  ignore_errors: true
+

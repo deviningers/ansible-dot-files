@@ -6,13 +6,10 @@
   - import_tasks: secure.yml
   - import_tasks: users.yml
   - import_tasks: programs.yml
-    # - other.yml
+  - import_tasks: GUI.yml
+# - import_tasks: other.yml
 
-- block:
-  - import_tasks: AUR_programs.yml
-  - import_tasks: GUI-Arch.yml
-  when: ansible_distribution == "Archlinux"
-
+# OS specific tasks
 # - block:
-#   - import_tasks: GUI-Debian.yml
-#   when: ansible_distribution in ["Debian", "Ubuntu"]
+#   - import_tasks: AUR_programs.yml
+#   when: ansible_distribution == "Archlinux"

@@ -3,10 +3,16 @@
     path: /etc/default/grub
   register: grub_installed
 
+- name: check if grub theme is installed
+  stat:
+    path: /boot/grub/themes/CyberRe
+  register: theme_installed
+
 - name: Install i3wm and dependencies
   package:
-    name: i3-gaps
-    name: xorg
+    name: 
+      - i3-gaps
+      - xorg
 
 - name: install ly-dm (arch)
   become_user: "{{ users[0] }}"
@@ -16,11 +22,15 @@
     - "sudo systemctl enable ly.service"
   when: ansible_distribution == "Archlinux"
 
-- name: install ly-dm (other)
+- name: install general ly-dm (dependencies)
   package:
-    - build-essential
-    - libpam0g-dev
-    - libxcb-xkb-dev
+    name:
+      - build-essential
+      - libpam0g-dev
+      - libxcb-xkb-dev
+  when: ansible_distribution in ["Debian", "Ubuntu"]
+  
+- name: install general ly-dm (install)
   command: "{{ item }}"
   with_items:
     - "git clone --recurse-submodules https://github.com/nullgemm/ly.git"
@@ -28,20 +38,20 @@
     - "make"
     - "make install"
     - "systemctl enable ly.service"
+    - "cd ..; rm -rf ly"
   when: ansible_distribution in ["Debian", "Ubuntu"]
 
 - name: configure grub theme
   command: "{{ item }}"
   with_items:
+    - "cd /tmp"
     - "curl https://raw.githubusercontent.com/alealexpro100/various_files/main/Grub2-theme%20CyberRe%201.0.0.tar.gz -o CyberRe.tar.gz"
     - "tar -xf CyberRe.tar.gz"
     - "mv \"CyberRe 1.0.0/CyberRe/\" /boot/grub/themes"
     - "sed -i '/#GRUB_THEME=/c\\GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"' /etc/default/grub"
     - "grub-mkconfig -o /boot/grub/grub.cfg"
     - "rm -rf CyberRe*"
-  when: grub_installed.stat.exists == true
+  when: (grub_installed.stat.exists) and (theme_installed.stat.exists != true)
 
-
-# install dmenu / rofi (and add config)
-
-#install oh my zsh elsewhere
+# install dmenu / todo / rofi (and add config)
+# add corruptor program 
