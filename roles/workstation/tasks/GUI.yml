@@ -1,0 +1,47 @@
+- name: check if grub exists
+  stat:
+    path: /etc/default/grub
+  register: grub_installed
+
+- name: Install i3wm and dependencies
+  package:
+    name: i3-gaps
+    name: xorg
+
+- name: install ly-dm (arch)
+  become_user: "{{ users[0] }}"
+  command: "{{ item }}"
+  with_items:
+    - "yay -S ly --noconfirm"
+    - "sudo systemctl enable ly.service"
+  when: ansible_distribution == "Archlinux"
+
+- name: install ly-dm (other)
+  package:
+    - build-essential
+    - libpam0g-dev
+    - libxcb-xkb-dev
+  command: "{{ item }}"
+  with_items:
+    - "git clone --recurse-submodules https://github.com/nullgemm/ly.git"
+    - "cd ly"
+    - "make"
+    - "make install"
+    - "systemctl enable ly.service"
+  when: ansible_distribution in ["Debian", "Ubuntu"]
+
+- name: configure grub theme
+  command: "{{ item }}"
+  with_items:
+    - "curl https://raw.githubusercontent.com/alealexpro100/various_files/main/Grub2-theme%20CyberRe%201.0.0.tar.gz -o CyberRe.tar.gz"
+    - "tar -xf CyberRe.tar.gz"
+    - "mv \"CyberRe 1.0.0/CyberRe/\" /boot/grub/themes"
+    - "sed -i '/#GRUB_THEME=/c\\GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"' /etc/default/grub"
+    - "grub-mkconfig -o /boot/grub/grub.cfg"
+    - "rm -rf CyberRe*"
+  when: grub_installed.stat.exists == true
+
+
+# install dmenu / rofi (and add config)
+
+#install oh my zsh elsewhere
