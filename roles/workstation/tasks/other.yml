@@ -1,3 +1,19 @@
+- name: remap caps lock key
+  commands: "{{ item }}"
+  with_items:
+    - "mkdir /usr/local/share/kbd/keymaps/"
+    - "cp /usr/share/kbd/keymaps/i386/qwerty/us.map.gz /usr/local/share/kbd/keymaps/personal.map.gz"
+    - "gunzip -d /usr/local/share/kbd/keymaps/personal.map.gz"
+    - "sed -i -e '/58 =/ s/= .*/= Control/' /usr/local/share/kbd/keymaps/personal.map"
+  args:
+    creates: /usr/local/share/kbd/keymaps/personal.map
+  when: ansible_distribution == "Archlinux"
+
+# - name: remap caps lock key Ubuntu
+#    XKBOPTIONS="ctrl:nocaps" in /etc/default/keyboard
+#    setxkbmap -option ctrl:nocaps
+#
+
 # - name: another task (move files)...etc
 #   copy:
 #     src: files/wallpapers
