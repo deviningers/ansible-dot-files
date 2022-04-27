@@ -23,15 +23,16 @@
     mode: 0700
   with_items:
     - { dir: '.config' }
+    - { dir: '.config/i3'}
     - { dir: '.zsh' }
     - { dir: 'repo' }
 
 - name: copy dotfiles
   copy:
-    src: {{ item.src }}
-    dest: {{ homedir }}/{{ item.dest }}
-    owner: {{ users[0] }}
-    group: {{ users[0] }}
+    src: "{{ item.src }}"
+    dest: "{{ homedir }}{{ item.dest }}"
+    owner: "{{ users[0] }}"
+    group: "{{ users[0] }}"
     mode: 0600
   with_items:
     - { src: 'i3_config', dest: '.config/i3/config'}
