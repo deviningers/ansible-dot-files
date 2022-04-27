@@ -5,12 +5,6 @@
 #     owner: root
 #     group: root
 #
-# - name: copy .zshrc file
-#   copy:
-#     src: files/zshrc
-#     dest: /home/devin/.zshrc
-#     owner: devin
-#     group: devin
 
 # Ansible user for auto-updating from repo
 # - name: add ansible user
