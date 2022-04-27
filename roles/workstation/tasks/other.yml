@@ -5,6 +5,7 @@
     - "cp /usr/share/kbd/keymaps/i386/qwerty/us.map.gz /usr/local/share/kbd/keymaps/personal.map.gz"
     - "gunzip -d /usr/local/share/kbd/keymaps/personal.map.gz"
     - "sed -i -e '/58 =/ s/= .*/= Control/' /usr/local/share/kbd/keymaps/personal.map"
+    - "echo KEYMAP=/usr/local/share/kbd/keymaps/personal.map > /etc/vconsole.conf"
   args:
     creates: /usr/local/share/kbd/keymaps/personal.map
   when: ansible_distribution == "Archlinux"
