@@ -27,13 +27,13 @@
       - ufw
       - shellharden
       # Graphical
-      - atom
       - flameshot   # look into better solutions
       - rofi
       - gnome-terminal # look into better solutions
       - firefox
       - signal-desktop
       - ttf-hack
+      # - atom (find replacement)
       # - containerd  (look into configuring this first)
   when: ansible_distribution == "Archlinux"
 
@@ -90,10 +90,9 @@
 
 - name: install oh-my-zsh and related customizations
   become_user: "{{ users[0] }}"
-  shell: 
+  shell:
     cmd: "{{ item }}"
   with_items:
     - "curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
     - "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k"
   ignore_errors: true
-
