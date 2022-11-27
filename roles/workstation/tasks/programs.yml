@@ -3,6 +3,8 @@
     name:
       # Shell
       - python-pywal
+      - git
+      - base-devel
       - htop
       - zsh
       - zsh-syntax-highlighting
@@ -42,6 +44,7 @@
     name:
       # Shell
       - htop
+      - git
       - zsh
       - zsh-syntax-highlighting
       - vim
@@ -73,16 +76,21 @@
       # - signal-desktop (https://itsfoss.com/install-signal-ubuntu/)
   when: ansible_distribution in ["Debian", "Ubuntu"]
 
-- name: install yay on arch
+- name: Clone yay
   become_user: "{{ users[0] }}"
-  command: "{{ item }}"
-  with_items:
-    - "cd ~/repo"
-    - "git clone https://aur.archlinux.org/yay.git"
-    - "cd yay"
-    - "makepkg -si"
+  git:
+    repo: https://aur.archlinux.org/yay-bin.git
+    dest: "~/repo/yay"
+    update: true
   when: ansible_distribution == "Archlinux"
-  ignore_errors: true
+
+- name: Build and install yay
+  become_user: "{{ users[0] }}"
+  command:
+    chdir: "~/repo/yay"
+    cmd: "makepkg -sfi --noconfirm"
+    creates: /usr/bin/yay
+  when: ansible_distribution == "Archlinux"
 
 # add packages w/ "yay -S pkg --noconfirm"
 # remove packages w/ "yay -Rns pkg --noconfirm"

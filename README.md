@@ -21,3 +21,4 @@ This will look for and run the local.yaml file.
 ##### Links:
 - [Most helpful Video - By LearnLinuxTV](https://youtu.be/gIDywsGBqf4)
 - [Hostname Solution](https://stackoverflow.com/questions/30782736/ansible-pull-with-no-inventory-limitations)
+- [Installing Yay](https://github.com/geosword/ansible.archyay)
