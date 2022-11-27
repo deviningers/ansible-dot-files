@@ -10,7 +10,7 @@
 
 - name: Install i3wm and dependencies
   package:
-    name: 
+    name:
       - i3-gaps
       - xorg
 
@@ -18,19 +18,19 @@
   become_user: "{{ users[0] }}"
   command: "{{ item }}"
   with_items:
-    - "yay -S ly --noconfirm"
+    - "yay -S ly-git --noconfirm"
     - "sudo systemctl enable ly.service"
   when: ansible_distribution == "Archlinux"
 
-- name: install general ly-dm (dependencies)
+- name: install dependencies for ly-dm (debian)
   package:
     name:
       - build-essential
       - libpam0g-dev
       - libxcb-xkb-dev
   when: ansible_distribution in ["Debian", "Ubuntu"]
-  
-- name: install general ly-dm (install)
+
+- name: install ly-dm (debian)
   command: "{{ item }}"
   with_items:
     - "git clone --recurse-submodules https://github.com/nullgemm/ly.git"
@@ -54,4 +54,4 @@
   when: (grub_installed.stat.exists) and (theme_installed.stat.exists != true)
 
 # install dmenu / todo / rofi (and add config)
-# add corruptor program 
+# add corruptor program
