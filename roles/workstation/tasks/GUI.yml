@@ -43,9 +43,10 @@
 
 - name: configure grub theme
   command: "{{ item }}"
+  args:
+    chdir: "/tmp"
   with_items:
-    - "cd /tmp"
-    - "curl https://raw.githubusercontent.com/alealexpro100/various_files/main/Grub2-theme%20CyberRe%201.0.0.tar.gz -o CyberRe.tar.gz"
+    - "curl https://raw.githubusercontent.com/alealexpro100/various_files/master/Grub2-theme%20CyberRe%201.0.0.tar.gz -o CyberRe.tar.gz"
     - "tar -xf CyberRe.tar.gz"
     - "mv \"CyberRe 1.0.0/CyberRe/\" /boot/grub/themes"
     - "sed -i '/#GRUB_THEME=/c\\GRUB_THEME=\"/boot/grub/themes/CyberRe/theme.txt\"' /etc/default/grub"
