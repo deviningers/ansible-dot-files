@@ -31,7 +31,7 @@
       # Graphical
       - flameshot   # look into better solutions
       - rofi
-      - gnome-terminal # look into better solutions
+      - st
       - firefox
       - signal-desktop
       - ttf-hack
