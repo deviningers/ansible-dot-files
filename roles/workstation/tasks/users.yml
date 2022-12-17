@@ -1,3 +1,17 @@
+---
+- name: Allow sudoers to file
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo    ALL=(ALL:ALL) ALL'
+    validate: '/usr/sbin/visudo -cf %s'
+
+- name: create sudo group
+  group:
+    name: sudo
+    state: present
+
 - name: create group
   group:
     name: "{{ item }}"
