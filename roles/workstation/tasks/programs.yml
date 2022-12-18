@@ -24,6 +24,8 @@
       - powerline-fonts
       - powerline-vim
       - zsh-syntax-highlighting
+      - zsh-autosuggestions
+      - wget
       # Security
       - nmap
       - ufw
@@ -96,11 +98,23 @@
 # remove packages w/ "yay -Rns pkg --noconfirm"
 # clean unwanted dependencies w/ "ysy -Yc --noconfirm"
 
-- name: install oh-my-zsh and related customizations
+- name: install oh-my-zsh
   become_user: "{{ users[0] }}"
   shell:
     cmd: "{{ item }}"
   with_items:
-    - "curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    - "sh -c \"(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)\""
     - "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k"
   ignore_errors: true
+
+- name: link installed oh-my-zsh plugins (arch)
+  become_user: "{{ users[0] }}"
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - src: "/usr/share/zsh/plugins/zsh-syntax-highlighting"
+      dest: "~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    - src: "/usr/share/zsh/plugins/zsh-autosuggestions"
+      dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
