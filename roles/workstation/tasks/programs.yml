@@ -31,6 +31,7 @@
       - ufw
       - shellharden
       # Graphical
+      - dolphin
       - flameshot   # look into better solutions
       - rofi
       - gnome-terminal
@@ -67,6 +68,7 @@
       - ufw
       # - shellharden
       # Graphical
+      - dolphin
       - flameshot   # look into better solutions
       - rofi
       - gnome-terminal # look into better solutions
@@ -118,3 +120,4 @@
       dest: "~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     - src: "/usr/share/zsh/plugins/zsh-autosuggestions"
       dest: "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  when: ansible_distribution == "Archlinux"
