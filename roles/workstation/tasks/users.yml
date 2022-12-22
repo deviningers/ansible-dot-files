@@ -40,6 +40,8 @@
     - { dir: '.config/i3'}
     - { dir: '.zsh' }
     - { dir: 'repo' }
+    - { dir: '.config/scripts' }
+    - { dir: '.config/wallpapers'}
 
 - name: copy dotfiles
   copy:

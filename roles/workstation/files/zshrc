@@ -100,6 +100,5 @@ alias cat=bat
 
 #commands to run
 uptime
-#wal -i /home/devin/Pictures/9kwk435ss3831.png -n -e &> /dev/null
-#/home/devin/.config/wallpaper/setbg.sh term
-#wal -n -e --theme ~/.cache/wal/colors.json &> /dev/null
+#/home/devin/.config/scripts/setbg.sh term
+wal -n -e --theme ~/.cache/wal/colors.json &> /dev/null

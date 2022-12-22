@@ -8,12 +8,19 @@
     path: /boot/grub/themes/CyberRe
   register: theme_installed
 
-- name: Install i3wm and dependencies
+- name: Install i3wm and script dependencies
   package:
     name:
       - i3-gaps
       - xorg
+      - imagemagick
+      - xss-lock
+      - i3lock
+      - xautolock
+      - libconfig
+      - picom
 
+# install ly login screen
 - name: install ly-dm (arch)
   become_user: "{{ users[0] }}"
   command: "{{ item }}"
@@ -41,6 +48,7 @@
     - "cd ..; rm -rf ly"
   when: ansible_distribution in ["Debian", "Ubuntu"]
 
+# configure grub theme
 - name: configure grub theme
   command: "{{ item }}"
   args:
@@ -54,5 +62,29 @@
     - "rm -rf CyberRe*"
   when: (grub_installed.stat.exists) and (theme_installed.stat.exists != true)
 
-# install dmenu / todo / rofi (and add config)
-# add corruptor program
+# setup wallpaper and lockscreen
+- name: install corrupter for lock screen
+  become_user: "{{ users[0] }}"
+  command: "yay -S corrupter-git --noconfirm"
+  when: ansible_distribution == "Archlinux"
+
+- name: copy custome scripts
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ homedir }}{{ item.dest }}"
+    owner: "{{ users[0] }}"
+    group: "{{ users[0] }}"
+    mode: 0644
+  with_items:
+    - { src: 'todo.sh', dest: '.config/scripts/todo.sh' }
+    - { src: 'setbg.sh', dest: '.config/scripts/setbg.sh' }
+
+- name: copy wallpapers
+  copy:
+    src: "wallpaper/"
+    dest: "{{ homedir }}.config/wallpapers/"
+    owner: "{{ users[0] }}"
+    group: "{{ users[0] }}"
+    mode: 0600
+
+# config dmenu / rofi
