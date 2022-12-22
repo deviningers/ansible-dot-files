@@ -19,6 +19,9 @@
       - xautolock
       - libconfig
       - picom
+      #i3status
+      - i3status
+      - confuse
 
 # install ly login screen
 - name: install ly-dm (arch)
@@ -74,7 +77,7 @@
     dest: "{{ homedir }}{{ item.dest }}"
     owner: "{{ users[0] }}"
     group: "{{ users[0] }}"
-    mode: 0644
+    mode: 0740
   with_items:
     - { src: 'todo.sh', dest: '.config/scripts/todo.sh' }
     - { src: 'setbg.sh', dest: '.config/scripts/setbg.sh' }
